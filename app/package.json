@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "npm run build && node --test dist/tests/domain/TelefonoVE.test.js dist/tests/use-cases/EmparejarVoluntarios.test.js"
+    "test": "npm run build && node --test dist/tests/domain/TelefonoVE.test.js dist/tests/use-cases/EmparejarVoluntarios.test.js dist/tests/use-cases/RegistrarVoluntario.test.js dist/tests/use-cases/CambiarDisponibilidad.test.js dist/tests/interface/http/voluntario.test.js"
+  },
+  "dependencies": {
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@types/node": "^20.19.1",

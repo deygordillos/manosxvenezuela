@@ -2,6 +2,11 @@
 
 > **Cómo se implementa.** Reusa el dominio de 001. Añade adapter de persistencia, seguridad e interfaz.
 
+## Estado
+Implementada en `app/` y verificada con `npm test`.
+
+Nota: la interfaz y los handlers HTTP son framework-agnostic hasta decidir el runtime web definitivo. `src/interface/http/voluntario.ts` expone handlers testeables para conectarlos luego a Workers/Pages/Next, y `src/interface/web/RegistroVoluntario.tsx` renderiza la pantalla sin acoplarse a React.
+
 ## Archivos
 ```
 src/application/use-cases/RegistrarVoluntario.ts

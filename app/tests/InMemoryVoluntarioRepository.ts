@@ -17,6 +17,10 @@ export class InMemoryVoluntarioRepository implements VoluntarioRepository {
     this.voluntarios.set(voluntario.id, voluntario);
   }
 
+  async buscarPorTokenGestion(tokenGestion: string): Promise<Voluntario | null> {
+    return [...this.voluntarios.values()].find((voluntario) => voluntario.tokenGestion === tokenGestion) ?? null;
+  }
+
   async buscarCompatibles(criterio: CriterioMatch): Promise<Voluntario[]> {
     return [...this.voluntarios.values()].filter(
       (voluntario) =>
