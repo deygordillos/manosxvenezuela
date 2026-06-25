@@ -16,7 +16,7 @@ interface (entrega)  ─┐
 infrastructure implementa los PORTS (adapters)
 ```
 
-### Estructura de carpetas (en `código/`)
+### Estructura de carpetas (en `app/`)
 ```
 src/
   domain/
@@ -179,7 +179,7 @@ Cada endpoint de escritura: **Zod + Turnstile + rate limit** o no se mergea.
 - **Turnstile** en todos los formularios de escritura.
 - **Rate limit por capas:** IP (5/10min, 20/h), teléfono (máx. 3 necesidades activas), regla WAF global.
 - **Honeypot** + **time-trap** (<2 s rechazado).
-- Validación teléfono VE: `^\+58(412|414|416|424|426|2\d{2})\d{7}$`.
+- Validación teléfono VE: `^\+58(412|414|415|416|422|424|426|2\d{2})\d{7}$`.
 - Caducidad automática 48 h.
 
 ### Privacidad (minimización)

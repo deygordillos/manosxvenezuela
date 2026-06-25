@@ -19,11 +19,20 @@ manos/
 │       ├── 002-registro-voluntario/
 │       ├── 003-publicar-necesidad/
 │       └── 004-listado-y-contacto/
-└── código/                      ← el código que genera el agente
+└── app/                      ← el código que genera el agente
 ```
 
 ## Cómo usarlo
 1. Lee `AGENT.md`.
 2. Lee la constitución completa (`spec/constitution/`).
 3. Implementa las features en el orden de `roadmap.md`, una a la vez.
-4. Genera el código en `código/`.
+4. Genera el código en `app/`.
+
+## Probar lo implementado
+Feature 001 está implementada y cubierta por tests unitarios.
+
+```bash
+cd app
+npm ci
+npm test
+```

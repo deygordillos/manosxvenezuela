@@ -4,6 +4,16 @@
 
 ---
 
+## Estado
+Implementada en `app/` y verificada con `npm test`.
+
+Comando de prueba:
+```bash
+cd app
+npm ci
+npm test
+```
+
 ## Archivos a crear
 ```
 src/domain/value-objects/TelefonoVE.ts      # valida +58..., factory que devuelve Result
