@@ -50,6 +50,12 @@ export class D1NecesidadRepository implements NecesidadRepository {
       .run();
   }
 
+  async buscarPorId(id: string): Promise<Necesidad | null> {
+    const row = await this.db.prepare("SELECT * FROM necesidad WHERE id = ?").bind(id).first<NecesidadRow>();
+
+    return row === null ? null : this.hidratar(row);
+  }
+
   async buscarPorTokenGestion(tokenGestion: string): Promise<Necesidad | null> {
     const row = await this.db
       .prepare("SELECT * FROM necesidad WHERE token_gestion = ?")
