@@ -2,6 +2,11 @@
 
 > **Cómo se implementa.** Reusa el caso de uso `EmparejarVoluntarios` de 001.
 
+## Estado
+Implementada en `app/` y verificada con `npm test`.
+
+Nota: igual que 002, los handlers HTTP y la pantalla son framework-agnostic para conectarlos luego al runtime definitivo. La caducidad está soportada por `expirarVencidas(now)` y por filtro `caduca_en > now` en listados.
+
 ## Archivos
 ```
 src/application/use-cases/PublicarNecesidad.ts   # crea + invoca EmparejarVoluntarios

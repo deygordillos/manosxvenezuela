@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "npm run build && node --test dist/tests/domain/TelefonoVE.test.js dist/tests/use-cases/EmparejarVoluntarios.test.js dist/tests/use-cases/RegistrarVoluntario.test.js dist/tests/use-cases/CambiarDisponibilidad.test.js dist/tests/interface/http/voluntario.test.js"
+    "test": "npm run build && node --test dist/tests/domain/TelefonoVE.test.js dist/tests/use-cases/EmparejarVoluntarios.test.js dist/tests/use-cases/RegistrarVoluntario.test.js dist/tests/use-cases/CambiarDisponibilidad.test.js dist/tests/use-cases/PublicarNecesidad.test.js dist/tests/use-cases/CerrarNecesidad.test.js dist/tests/interface/http/voluntario.test.js dist/tests/interface/http/necesidad.test.js"
   },
   "dependencies": {
     "zod": "^3.25.67"

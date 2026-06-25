@@ -1,26 +1,26 @@
 # 003 · Publicar necesidad — tasks.md
 
 ## Aplicación
-- [ ] Port `NecesidadRepository`.
-- [ ] Caso de uso `PublicarNecesidad` (crea + empareja) + test.
-- [ ] Caso de uso `CerrarNecesidad`.
+- [x] Port `NecesidadRepository`.
+- [x] Caso de uso `PublicarNecesidad` (crea + empareja) + test.
+- [x] Caso de uso `CerrarNecesidad`.
 
 ## Infraestructura
-- [ ] `D1NecesidadRepository` (o Supabase).
-- [ ] Cron de caducidad/purga (o filtro `caduca_en > now` en listados).
+- [x] `D1NecesidadRepository` (o Supabase).
+- [x] Cron de caducidad/purga (o filtro `caduca_en > now` en listados).
 
 ## Interfaz
-- [ ] `POST /api/necesidad` con flujo de seguridad.
-- [ ] `PATCH /api/necesidad/estado` (token de gestión).
-- [ ] Pantalla `PublicarNecesidad.tsx` con resultados de match.
+- [x] `POST /api/necesidad` con flujo de seguridad.
+- [x] `PATCH /api/necesidad/estado` (token de gestión).
+- [x] Pantalla `PublicarNecesidad.tsx` con resultados de match.
 
 ## Seguridad
-- [ ] Zod + Turnstile + honeypot + time-trap.
-- [ ] Rate limit IP (5/10 min) + teléfono (≤3 activas).
-- [ ] Contacto del solicitante nunca en listado público.
+- [x] Zod + Turnstile + honeypot + time-trap.
+- [x] Rate limit IP (5/10 min) + teléfono (≤3 activas).
+- [x] Contacto del solicitante nunca en listado público.
 
 ## Definition of Done
-- [ ] CA-1..CA-5 verificados.
-- [ ] `CRITICA` se prioriza en listados.
-- [ ] Mobile 380px, AA, foco visible.
-- [ ] Tests verdes.
+- [x] CA-1..CA-5 verificados.
+- [x] `CRITICA` se prioriza en listados.
+- [x] Mobile 380px, AA, foco visible.
+- [x] Tests verdes.
