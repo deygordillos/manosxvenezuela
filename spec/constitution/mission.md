@@ -6,7 +6,7 @@
 ---
 
 ## El problema
-El 24 de junio de 2026 dos terremotos (M7,2 y M7,5) golpearon la región central de Carabobo con daños estructurales en Caracas y derrumbes confirmados. En desastres la ayuda no falla por falta de voluntarios sino por **falta de coordinación**: rescatistas, médicos, ingenieros estructurales, paramédicos, conductores y logistas existen, pero no saben *dónde* ni *qué* se necesita ahora mismo.
+El 24 de junio de 2026 dos terremotos (M7,2 y M7,5) golpearon la región Yaracuy/Carabobo con daños estructurales en Caracas y derrumbes confirmados. En desastres la ayuda no falla por falta de voluntarios sino por **falta de coordinación**: rescatistas, médicos, ingenieros estructurales, paramédicos, conductores y logistas existen, pero no saben *dónde* ni *qué* se necesita ahora mismo.
 
 ## La misión
 **Manos** conecta, en minutos, a un voluntario con la **habilidad correcta** y la **cercanía correcta** con una **necesidad concreta y verificada**.
@@ -36,7 +36,7 @@ Internet intermitente, cortes de luz, datos caros, teléfonos gama baja y predom
 5. Estados de necesidad (abierta → asignada → resuelta) y de voluntario (disponible/ocupado).
 
 ## No-objetivos (explícito)
-- **No** es un buscador de personas desaparecidas.
+- **No** es un buscador de personas desaparecidas (eso ya existe: `desaparecidosterremotovenezuela.com`).
 - **No** reemplaza a Protección Civil ni a cuerpos oficiales; los complementa.
 - **No** almacena datos sensibles más allá de lo mínimo para coordinar.
 - **No** incluye mapa interactivo, OTP ni panel de coordinadores en el MVP (ver `roadmap.md`).
