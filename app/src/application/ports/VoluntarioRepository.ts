@@ -10,6 +10,7 @@ export type CriterioMatch = {
 
 export interface VoluntarioRepository {
   guardar(voluntario: Voluntario): Promise<void>;
+  buscarPorTokenGestion(tokenGestion: string): Promise<Voluntario | null>;
   buscarCompatibles(criterio: CriterioMatch): Promise<Voluntario[]>;
   cambiarEstado(id: string, estado: EstadoVoluntario): Promise<void>;
 }
