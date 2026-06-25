@@ -6,12 +6,12 @@
 
 ## Orden de construcción (MVP, "en horas")
 
-| # | Feature | Por qué este orden | Carpeta |
-|---|---|---|---|
-| 001 | **Núcleo de emparejamiento** | Es el corazón del sistema; define dominio y reglas que el resto usa. Se construye con repos en memoria y tests, sin UI ni infra. | `features/001-nucleo-emparejamiento/` |
-| 002 | **Registro de voluntario** | Sin voluntarios no hay a quién emparejar. Primer flujo de escritura → estrena el baseline de seguridad. | `features/002-registro-voluntario/` |
-| 003 | **Publicar necesidad** | Dispara el emparejamiento (001) y devuelve coincidencias. | `features/003-publicar-necesidad/` |
-| 004 | **Listado público y contacto** | Cierra el ciclo: ver necesidades y contactar por WhatsApp (`wa.me`). | `features/004-listado-y-contacto/` |
+| # | Estado | Feature | Por qué este orden | Carpeta |
+|---|---|---|---|---|
+| 001 | Hecha | **Núcleo de emparejamiento** | Es el corazón del sistema; define dominio y reglas que el resto usa. Se construye con repos en memoria y tests, sin UI ni infra. | `features/001-nucleo-emparejamiento/` |
+| 002 | Pendiente | **Registro de voluntario** | Sin voluntarios no hay a quién emparejar. Primer flujo de escritura → estrena el baseline de seguridad. | `features/002-registro-voluntario/` |
+| 003 | Pendiente | **Publicar necesidad** | Dispara el emparejamiento (001) y devuelve coincidencias. | `features/003-publicar-necesidad/` |
+| 004 | Pendiente | **Listado público y contacto** | Cierra el ciclo: ver necesidades y contactar por WhatsApp (`wa.me`). | `features/004-listado-y-contacto/` |
 
 > Seguridad/anti-bot (§5 de `tech-stack.md`) y diseño UI (§4) son **convenciones transversales**, no features sueltas: cada feature las aplica en su `plan.md` y `tasks.md`.
 

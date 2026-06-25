@@ -9,7 +9,7 @@ terremoto de Venezuela (jun-2026).
 2. `spec/constitution/tech-stack.md` — arquitectura, stack, diseño y seguridad. **Reglas que toda feature cumple.**
 3. `spec/constitution/roadmap.md` — orden de las features.
 4. La feature activa en `spec/features/NNN-*/` (`spec.md` → `plan.md` → `tasks.md`).
-5. Generar el código en `código/` siguiendo la estructura de `tech-stack.md` §1.
+5. Generar el código en `app/` siguiendo la estructura de `tech-stack.md` §1.
 
 **La constitución manda.** Si el código contradice la constitución, detente y actualiza la constitución primero (mismo PR).
 
@@ -24,6 +24,17 @@ terremoto de Venezuela (jun-2026).
 - Implementa **una feature a la vez**, en el orden de `roadmap.md`.
 - Cada tarea de `tasks.md` debe mapear a un criterio de aceptación de `spec.md`.
 - Definition of Done por feature: CA cumplidos + tests verdes + baseline de seguridad aplicado + mobile 380px/AA.
+
+## GitHub Flow y commits
+- Usa GitHub Flow: crear una rama corta desde `master`/`main`, commitear ahí, hacer push a `origin` y abrir PR antes de mergear.
+- No commitear directo a la rama base salvo instrucción explícita.
+- Nombrar ramas con prefijo semántico y descripción corta: `feat/...`, `fix/...`, `docs/...`, `chore/...`.
+- Los commits siguen Conventional Commits: `<tipo>[ámbito opcional]: <descripción>`.
+- Tipos principales: `feat` para funcionalidades y `fix` para correcciones.
+- Tipos permitidos de soporte: `docs`, `test`, `refactor`, `perf`, `style`, `build`, `ci`, `chore`.
+- Cambios incompatibles deben incluir `BREAKING CHANGE: ...` en cuerpo o pie.
+- Antes de commitear: revisar `git status --short`, `git diff`, `git log --oneline -10`, stagear solo archivos intencionales y correr pruebas relevantes.
+- Usar la skill local `conventional-commits` cuando se creen o revisen mensajes de commit, ramas o PRs.
 
 ## Convenciones
 - TypeScript `strict`, sin `any`. Zod en cada borde. `Result<T,DomainError>` en casos de uso.

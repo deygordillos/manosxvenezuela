@@ -43,7 +43,7 @@ Implementar el dominio (entidades, value-objects, reglas) y el caso de uso `Empa
   **entonces** el de 3 km aparece primero.
 
 **CA-6 · Validación de dominio del teléfono**
-- **Dado** un teléfono que no cumple `^\+58(412|414|416|424|426|2\d{2})\d{7}$`,
+- **Dado** un teléfono que no cumple `^\+58(412|414|415|416|422|424|426|2\d{2})\d{7}$`,
   **entonces** la creación del voluntario falla con `DomainError` (no se persiste).
 
 ## Fuera de alcance (otras features)
