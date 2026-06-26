@@ -1,21 +1,16 @@
 import { Habilidad } from "../../domain/value-objects/Habilidad";
 import { Urgencia } from "../../domain/value-objects/Urgencia";
 import { MUNICIPIOS } from "../../shared/municipios";
+import { renderPageShell } from "./layout/PageShell";
 
 export function renderPublicarNecesidadPage(turnstileSiteKey: string, timestamp = Date.now()): string {
-  return `<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Publicar necesidad | Manos</title>
-  <style>${PUBLICAR_NECESIDAD_CSS}</style>
-</head>
-<body>
-  <main class="need-shell">
+  return renderPageShell({
+    title: "Publicar necesidad | Manos",
+    activePath: "/necesidad/nueva",
+    styles: PUBLICAR_NECESIDAD_CSS,
+    body: `<main class="need-shell">
     <section class="need-card" aria-labelledby="need-title">
       <div class="triage-strip" aria-hidden="true"></div>
-      <a class="home-link" href="/">← Volver al inicio</a>
       <p class="eyebrow">Solicitud de apoyo</p>
       <h1 id="need-title">Publica una necesidad concreta.</h1>
       <p class="lead">Describe que hace falta, donde ocurre y que habilidad debe responder. El sistema mostrara voluntarios compatibles al instante.</p>
@@ -36,9 +31,8 @@ export function renderPublicarNecesidadPage(turnstileSiteKey: string, timestamp 
       </form>
       <aside class="empty-state"><strong>Sin coincidencias aun.</strong> Comparte el enlace de gestion con coordinadores y vuelve a intentar cuando entren mas voluntarios.</aside>
     </section>
-  </main>
-</body>
-</html>`;
+  </main>`,
+  });
 }
 
 function renderHabilidades(): string {
