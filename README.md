@@ -28,11 +28,25 @@ manos/
 3. Implementa las features en el orden de `roadmap.md`, una a la vez.
 4. Genera el código en `app/`.
 
-## Probar lo implementado
-Feature 001 está implementada y cubierta por tests unitarios.
+## Levantar la web local
+La app incluye un servidor de desarrollo con datos en memoria para ver los flujos en navegador.
 
 ```bash
-cd app
-npm ci
+npm run install:app
+npm run dev
+```
+
+Abre `http://localhost:4321`.
+
+Rutas útiles:
+- `/` listado público de necesidades.
+- `/voluntario/registro` registro de voluntario.
+- `/necesidad/nueva` publicación de necesidad.
+
+## Probar lo implementado
+Las features 001–004 están cubiertas por tests unitarios/de handlers.
+
+```bash
+npm run install:app
 npm test
 ```

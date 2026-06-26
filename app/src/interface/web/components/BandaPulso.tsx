@@ -6,5 +6,5 @@ export function renderBandaPulso(estado: EstadoPulso): string {
 }
 
 export const BANDA_PULSO_CSS = `
-.pulse-band{height:5px;border-radius:999px;overflow:hidden;background:#2C333D}.pulse-band span{display:block;width:45%;height:100%;border-radius:999px}.pulse-verde span{background:#25C281}.pulse-ambar span{background:#F2B233}.pulse-rojo span{background:#E11D2A}@media (prefers-reduced-motion:no-preference){.pulse-band span{animation:pulse-scan 2.4s ease-in-out infinite}@keyframes pulse-scan{0%{transform:translateX(-110%)}50%{transform:translateX(80%)}100%{transform:translateX(230%)}}}
+.pulse-band{height:5px;border-radius:999px;overflow:hidden;background:#2C333D}.pulse-band span{display:block;width:100%;height:100%;border-radius:999px}.pulse-verde span{background:#25C281}.pulse-ambar span{background:#F2B233}.pulse-rojo span{background:#E11D2A}
 `;
