@@ -20,7 +20,10 @@ test("PageShell renderiza header global y footer de autoria", () => {
   assert.match(html, /Publicar necesidad/);
   assert.match(html, /Desarrollado por/);
   assert.match(html, /Dey Gordillo/);
-  assert.match(html, /https:\/\/github\.com\/deygordillos/);
+  assert.match(html, /https:\/\/deygordillos\.github\.io\/#/);
+  assert.match(html, /https:\/\/www\.linkedin\.com\/in\/deygordillos/);
+  assert.match(html, /https:\/\/instagram\.com\/deygordillos/);
+  assert.match(html, /mailto:deygordillos@gmail\.com/);
 });
 
 test("paginas principales usan el shell comun", () => {
@@ -33,6 +36,7 @@ test("paginas principales usan el shell comun", () => {
   for (const html of pages) {
     assert.match(html, /ManosXVenezuela/);
     assert.match(html, /Desarrollado por/);
-    assert.match(html, /https:\/\/github\.com\/deygordillos/);
+    assert.match(html, /https:\/\/deygordillos\.github\.io\/#/);
+    assert.match(html, /mailto:deygordillos@gmail\.com/);
   }
 });
