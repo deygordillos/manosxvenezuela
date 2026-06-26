@@ -7,6 +7,7 @@ export interface NecesidadRepository {
   buscarPorTokenGestion(tokenGestion: string): Promise<Necesidad | null>;
   contarActivasPorContacto(contacto: TelefonoVE, now: Date): Promise<number>;
   cambiarEstado(id: string, estado: EstadoNecesidad): Promise<void>;
+  asignarSiAbierta(id: string, now: Date): Promise<boolean>;
   expirarVencidas(now: Date): Promise<number>;
   listarAbiertasVigentes(now: Date): Promise<Necesidad[]>;
   listarPorEstado(estado: EstadoNecesidad, now: Date): Promise<Necesidad[]>;

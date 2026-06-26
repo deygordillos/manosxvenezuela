@@ -14,7 +14,7 @@
 | 004 | Hecha | **Listado público y contacto** | Cierra el ciclo: ver necesidades y contactar por WhatsApp (`wa.me`). | `features/004-listado-y-contacto/` |
 | 005 | Hecha | **Shell público de marca** | Unifica header, footer, navegación y autoría antes de seguir sumando pantallas. | `features/005-shell-publico-marca/` |
 | 006 | Hecha | **Estados y filtros de necesidad** | Hace operable el listado por estado, zona y habilidad sin exponer contacto. | `features/006-estados-y-filtros-necesidad/` |
-| 007 | Pendiente | **Contacto asigna necesidad** | Evita que una necesidad contactada siga apareciendo como abierta y bloquee contactos duplicados. | `features/007-contacto-asigna-necesidad/` |
+| 007 | Hecha | **Contacto asigna necesidad** | Evita que una necesidad contactada siga apareciendo como abierta y bloquee contactos duplicados. | `features/007-contacto-asigna-necesidad/` |
 | 008 | Pendiente | **Gestión de necesidad por token** | Permite a quien publicó cerrar como resuelta o cancelada. | `features/008-gestion-necesidad-token/` |
 | 009 | Pendiente | **Gestión de voluntario por token** | Permite al voluntario cambiar disponibilidad sin panel ni login. | `features/009-gestion-voluntario-token/` |
 | 010 | Pendiente | **Persistencia D1 real** | Sustituye memoria/dev por almacenamiento real deployable en Cloudflare D1. | `features/010-persistencia-d1-real/` |

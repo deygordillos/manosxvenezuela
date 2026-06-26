@@ -2,6 +2,8 @@
 
 > Ajustar el flujo de contacto para hacer transición de estado atómica desde la capa de aplicación.
 
+Estado: implementada en `feat/contacto-asigna-necesidad`.
+
 ## Archivos
 ```
 src/application/use-cases/GenerarContactoWhatsapp.ts

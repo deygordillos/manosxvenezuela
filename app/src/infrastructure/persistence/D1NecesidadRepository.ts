@@ -78,6 +78,15 @@ export class D1NecesidadRepository implements NecesidadRepository {
     await this.db.prepare("UPDATE necesidad SET estado = ? WHERE id = ?").bind(estado, id).run();
   }
 
+  async asignarSiAbierta(id: string, now: Date): Promise<boolean> {
+    const result = await this.db
+      .prepare("UPDATE necesidad SET estado = ? WHERE id = ? AND estado = ? AND caduca_en > ?")
+      .bind(EstadoNecesidad.Asignada, id, EstadoNecesidad.Abierta, now.toISOString())
+      .run();
+
+    return ((result as { readonly meta?: { readonly changes?: number } }).meta?.changes ?? 0) > 0;
+  }
+
   async expirarVencidas(now: Date): Promise<number> {
     await this.db
       .prepare("UPDATE necesidad SET estado = ? WHERE estado = ? AND caduca_en <= ?")

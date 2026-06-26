@@ -292,6 +292,16 @@ class DevNecesidadRepository implements NecesidadRepository {
     if (actualizado.ok) this.necesidades.set(id, actualizado.value);
   }
 
+  async asignarSiAbierta(id: string, now: Date): Promise<boolean> {
+    const actual = this.necesidades.get(id);
+    if (actual === undefined || actual.estado !== EstadoNecesidad.Abierta || actual.caducaEn <= now) {
+      return false;
+    }
+
+    await this.cambiarEstado(id, EstadoNecesidad.Asignada);
+    return true;
+  }
+
   async expirarVencidas(now: Date): Promise<number> {
     let total = 0;
     for (const necesidad of this.necesidades.values()) {
