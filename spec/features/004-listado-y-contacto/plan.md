@@ -2,6 +2,11 @@
 
 > **Cómo se implementa.** Lectura pública + generación del enlace `wa.me` (costo 0).
 
+## Estado
+Implementada en `app/` y verificada con `npm test`.
+
+Nota: `GET /api/necesidades` no retorna el contacto del solicitante. El número se resuelve únicamente en `POST /api/contacto/:id`, validando que la necesidad siga activa.
+
 ## Archivos
 ```
 src/application/use-cases/ListarNecesidades.ts

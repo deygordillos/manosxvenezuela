@@ -16,6 +16,10 @@ export class InMemoryNecesidadRepository implements NecesidadRepository {
     this.necesidades.set(necesidad.id, necesidad);
   }
 
+  async buscarPorId(id: string): Promise<Necesidad | null> {
+    return this.necesidades.get(id) ?? null;
+  }
+
   async buscarPorTokenGestion(tokenGestion: string): Promise<Necesidad | null> {
     return [...this.necesidades.values()].find((necesidad) => necesidad.tokenGestion === tokenGestion) ?? null;
   }

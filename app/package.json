@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "npm run build && node --test dist/tests/domain/TelefonoVE.test.js dist/tests/use-cases/EmparejarVoluntarios.test.js dist/tests/use-cases/RegistrarVoluntario.test.js dist/tests/use-cases/CambiarDisponibilidad.test.js dist/tests/use-cases/PublicarNecesidad.test.js dist/tests/use-cases/CerrarNecesidad.test.js dist/tests/interface/http/voluntario.test.js dist/tests/interface/http/necesidad.test.js"
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json",
+    "dev": "npm run build && node dist/src/interface/http/dev-server.js",
+    "test": "npm run build && node --test dist/tests/domain/TelefonoVE.test.js dist/tests/use-cases/EmparejarVoluntarios.test.js dist/tests/use-cases/RegistrarVoluntario.test.js dist/tests/use-cases/CambiarDisponibilidad.test.js dist/tests/use-cases/PublicarNecesidad.test.js dist/tests/use-cases/CerrarNecesidad.test.js dist/tests/use-cases/ListarNecesidades.test.js dist/tests/use-cases/GenerarContactoWhatsapp.test.js dist/tests/interface/http/voluntario.test.js dist/tests/interface/http/necesidad.test.js dist/tests/interface/http/listado-contacto.test.js"
   },
   "dependencies": {
     "zod": "^3.25.67"
