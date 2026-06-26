@@ -2,6 +2,8 @@
 
 > Página server-rendered ligera para cerrar necesidades.
 
+Estado: implementada en `feat/gestion-necesidad-token`.
+
 ## Archivos
 ```
 src/interface/http/gestion-necesidad.ts

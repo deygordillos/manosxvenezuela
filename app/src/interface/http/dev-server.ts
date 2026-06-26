@@ -14,7 +14,8 @@ import { EdgeRateLimiter } from "../../infrastructure/security/EdgeRateLimiter";
 import { MUNICIPIOS } from "../../shared/municipios";
 import { getNecesidades } from "./listado";
 import { postContacto } from "./contacto";
-import { postNecesidad } from "./necesidad";
+import { getGestionNecesidad } from "./gestion-necesidad";
+import { patchNecesidadEstado, postNecesidad } from "./necesidad";
 import { postVoluntario } from "./voluntario";
 import { renderListadoNecesidadesPage } from "../web/ListadoNecesidades";
 import { renderPublicarNecesidadPage } from "../web/PublicarNecesidad";
@@ -50,6 +51,15 @@ async function route(req: IncomingMessage, res: ServerResponse): Promise<void> {
 
   if (req.method === "GET" && url.pathname === "/necesidad/nueva") {
     sendHtml(res, renderPublicarNecesidadPage("local-dev", Date.now() - 3000));
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/necesidad/gestion") {
+    const response = await getGestionNecesidad(
+      { query: { token: optionalParam(url.searchParams.get("token")) } },
+      { necesidades },
+    );
+    sendHtml(res, String(response.body), response.status);
     return;
   }
 
@@ -104,6 +114,16 @@ async function route(req: IncomingMessage, res: ServerResponse): Promise<void> {
     return;
   }
 
+  if (req.method === "POST" && url.pathname === "/api/necesidad/estado") {
+    const form = await readForm(req);
+    const response = await patchNecesidadEstado(
+      { ip: clientIp(req), now: Date.now(), body: necesidadEstadoBody(form) },
+      { necesidades },
+    );
+    sendHtml(res, renderDevResult("Gestion de necesidad", response.status, response.body));
+    return;
+  }
+
   if (req.method === "POST" && url.pathname.startsWith("/api/contacto/")) {
     const necesidadId = decodeURIComponent(url.pathname.replace("/api/contacto/", ""));
     const response = await postContacto({ params: { necesidadId } }, { necesidades });
@@ -147,6 +167,13 @@ function necesidadBody(form: URLSearchParams): Record<string, unknown> {
   };
 }
 
+function necesidadEstadoBody(form: URLSearchParams): Record<string, unknown> {
+  return {
+    tokenGestion: form.get("tokenGestion") ?? "",
+    estado: form.get("estado") ?? "",
+  };
+}
+
 function renderDevResult(title: string, status: number, body: unknown): string {
   return renderPageShell({
     title,
@@ -165,8 +192,8 @@ async function readForm(req: IncomingMessage): Promise<URLSearchParams> {
   return new URLSearchParams(Buffer.concat(chunks).toString("utf8"));
 }
 
-function sendHtml(res: ServerResponse, html: string): void {
-  res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+function sendHtml(res: ServerResponse, html: string, status = 200): void {
+  res.writeHead(status, { "Content-Type": "text/html; charset=utf-8" });
   res.end(html);
 }
 
