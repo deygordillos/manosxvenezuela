@@ -16,7 +16,7 @@
 | 006 | Hecha | **Estados y filtros de necesidad** | Hace operable el listado por estado, zona y habilidad sin exponer contacto. | `features/006-estados-y-filtros-necesidad/` |
 | 007 | Hecha | **Contacto asigna necesidad** | Evita que una necesidad contactada siga apareciendo como abierta y bloquee contactos duplicados. | `features/007-contacto-asigna-necesidad/` |
 | 008 | Hecha | **Gestión de necesidad por token** | Permite a quien publicó cerrar como resuelta o cancelada. | `features/008-gestion-necesidad-token/` |
-| 009 | Pendiente | **Gestión de voluntario por token** | Permite al voluntario cambiar disponibilidad sin panel ni login. | `features/009-gestion-voluntario-token/` |
+| 009 | Hecha | **Gestión de voluntario por token** | Permite al voluntario cambiar disponibilidad sin panel ni login. | `features/009-gestion-voluntario-token/` |
 | 010 | Pendiente | **Persistencia D1 real** | Sustituye memoria/dev por almacenamiento real deployable en Cloudflare D1. | `features/010-persistencia-d1-real/` |
 | 011 | Pendiente | **Configuración por entorno** | Elimina hardcoded operativo con env vars y defaults seguros de dev. | `features/011-configuracion-entorno/` |
 | 012 | Pendiente | **Seguridad de producción** | Cierra Turnstile real, headers, rate limit productivo y baseline OWASP antes de go-live. | `features/012-seguridad-produccion/` |

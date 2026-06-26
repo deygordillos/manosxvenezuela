@@ -2,6 +2,8 @@
 
 > Página server-rendered ligera para disponibilidad del voluntario.
 
+Estado: implementada en `feat/gestion-voluntario-token`.
+
 ## Archivos
 ```
 src/interface/http/gestion-voluntario.ts

@@ -15,8 +15,9 @@ import { MUNICIPIOS } from "../../shared/municipios";
 import { getNecesidades } from "./listado";
 import { postContacto } from "./contacto";
 import { getGestionNecesidad } from "./gestion-necesidad";
+import { getGestionVoluntario } from "./gestion-voluntario";
 import { patchNecesidadEstado, postNecesidad } from "./necesidad";
-import { postVoluntario } from "./voluntario";
+import { patchVoluntarioEstado, postVoluntario } from "./voluntario";
 import { renderListadoNecesidadesPage } from "../web/ListadoNecesidades";
 import { renderPublicarNecesidadPage } from "../web/PublicarNecesidad";
 import { renderRegistroVoluntarioPage } from "../web/RegistroVoluntario";
@@ -46,6 +47,15 @@ async function route(req: IncomingMessage, res: ServerResponse): Promise<void> {
 
   if (req.method === "GET" && url.pathname === "/voluntario/registro") {
     sendHtml(res, renderRegistroVoluntarioPage("local-dev", Date.now() - 3000));
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/voluntario/gestion") {
+    const response = await getGestionVoluntario(
+      { query: { token: optionalParam(url.searchParams.get("token")) } },
+      { voluntarios },
+    );
+    sendHtml(res, String(response.body), response.status);
     return;
   }
 
@@ -93,6 +103,16 @@ async function route(req: IncomingMessage, res: ServerResponse): Promise<void> {
       },
     );
     sendHtml(res, renderDevResult("Registro de voluntario", response.status, response.body));
+    return;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/voluntario/estado") {
+    const form = await readForm(req);
+    const response = await patchVoluntarioEstado(
+      { ip: clientIp(req), now: Date.now(), body: voluntarioEstadoBody(form) },
+      { repo: voluntarios },
+    );
+    sendHtml(res, renderDevResult("Gestion de voluntario", response.status, response.body));
     return;
   }
 
@@ -150,6 +170,13 @@ function voluntarioBody(form: URLSearchParams): Record<string, unknown> {
     honeypot: form.get("honeypot") ?? "",
     ts: Number(form.get("ts") ?? Date.now() - 3000),
     turnstileToken: "local-dev",
+  };
+}
+
+function voluntarioEstadoBody(form: URLSearchParams): Record<string, unknown> {
+  return {
+    tokenGestion: form.get("tokenGestion") ?? "",
+    estado: form.get("estado") ?? "",
   };
 }
 
