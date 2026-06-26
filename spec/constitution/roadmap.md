@@ -12,6 +12,14 @@
 | 002 | Hecha | **Registro de voluntario** | Sin voluntarios no hay a quién emparejar. Primer flujo de escritura → estrena el baseline de seguridad. | `features/002-registro-voluntario/` |
 | 003 | Hecha | **Publicar necesidad** | Dispara el emparejamiento (001) y devuelve coincidencias. | `features/003-publicar-necesidad/` |
 | 004 | Hecha | **Listado público y contacto** | Cierra el ciclo: ver necesidades y contactar por WhatsApp (`wa.me`). | `features/004-listado-y-contacto/` |
+| 005 | Pendiente | **Shell público de marca** | Unifica header, footer, navegación y autoría antes de seguir sumando pantallas. | `features/005-shell-publico-marca/` |
+| 006 | Pendiente | **Estados y filtros de necesidad** | Hace operable el listado por estado, zona y habilidad sin exponer contacto. | `features/006-estados-y-filtros-necesidad/` |
+| 007 | Pendiente | **Contacto asigna necesidad** | Evita que una necesidad contactada siga apareciendo como abierta y bloquee contactos duplicados. | `features/007-contacto-asigna-necesidad/` |
+| 008 | Pendiente | **Gestión de necesidad por token** | Permite a quien publicó cerrar como resuelta o cancelada. | `features/008-gestion-necesidad-token/` |
+| 009 | Pendiente | **Gestión de voluntario por token** | Permite al voluntario cambiar disponibilidad sin panel ni login. | `features/009-gestion-voluntario-token/` |
+| 010 | Pendiente | **Persistencia D1 real** | Sustituye memoria/dev por almacenamiento real deployable en Cloudflare D1. | `features/010-persistencia-d1-real/` |
+| 011 | Pendiente | **Configuración por entorno** | Elimina hardcoded operativo con env vars y defaults seguros de dev. | `features/011-configuracion-entorno/` |
+| 012 | Pendiente | **Seguridad de producción** | Cierra Turnstile real, headers, rate limit productivo y baseline OWASP antes de go-live. | `features/012-seguridad-produccion/` |
 
 > Seguridad/anti-bot (§5 de `tech-stack.md`) y diseño UI (§4) son **convenciones transversales**, no features sueltas: cada feature las aplica en su `plan.md` y `tasks.md`.
 
