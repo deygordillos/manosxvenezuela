@@ -23,8 +23,42 @@ test("genera enlace wa.me URL-encoded para necesidad activa", async () => {
   }
 });
 
-test("no genera enlace para necesidad cerrada", async () => {
-  const repo = new InMemoryNecesidadRepository([crearNecesidad(EstadoNecesidad.Resuelta)]);
+test("asigna la necesidad al generar el primer contacto", async () => {
+  const repo = new InMemoryNecesidadRepository([crearNecesidad(EstadoNecesidad.Abierta)]);
+
+  const result = await new GenerarContactoWhatsapp(repo, new WhatsappLinkNotifier()).ejecutar("nec-1");
+  const necesidad = await repo.buscarPorId("nec-1");
+
+  assert.equal(result.ok, true);
+  assert.equal(necesidad?.estado, EstadoNecesidad.Asignada);
+});
+
+test("bloquea contacto duplicado para necesidad asignada", async () => {
+  const repo = new InMemoryNecesidadRepository([crearNecesidad(EstadoNecesidad.Abierta)]);
+  const contacto = new GenerarContactoWhatsapp(repo, new WhatsappLinkNotifier());
+
+  const primerIntento = await contacto.ejecutar("nec-1");
+  const segundoIntento = await contacto.ejecutar("nec-1");
+
+  assert.equal(primerIntento.ok, true);
+  assert.equal(segundoIntento.ok, false);
+  if (!segundoIntento.ok) {
+    assert.equal(segundoIntento.error.message, "Esta necesidad ya esta siendo atendida");
+  }
+});
+
+test("no genera enlace para necesidades cerradas", async () => {
+  for (const estado of [EstadoNecesidad.Resuelta, EstadoNecesidad.Cancelada, EstadoNecesidad.Expirada]) {
+    const repo = new InMemoryNecesidadRepository([crearNecesidad(estado)]);
+
+    const result = await new GenerarContactoWhatsapp(repo, new WhatsappLinkNotifier()).ejecutar("nec-1");
+
+    assert.equal(result.ok, false);
+  }
+});
+
+test("no genera enlace para necesidad asignada", async () => {
+  const repo = new InMemoryNecesidadRepository([crearNecesidad(EstadoNecesidad.Asignada)]);
 
   const result = await new GenerarContactoWhatsapp(repo, new WhatsappLinkNotifier()).ejecutar("nec-1");
 

@@ -78,16 +78,50 @@ test("CA-3 banda roja cuando critica no tiene voluntarios cerca", async () => {
 });
 
 test("CA-4 contacto resuelve numero solo al pulsar", async () => {
+  const repo = new InMemoryNecesidadRepository([crearNecesidad({ id: "nec-1" })]);
   const response = await postContacto(
     { params: { necesidadId: "nec-1" } },
-    { necesidades: new InMemoryNecesidadRepository([crearNecesidad({ id: "nec-1" })]) },
+    { necesidades: repo },
   );
+  const necesidad = await repo.buscarPorId("nec-1");
 
   assert.equal(response.status, 200);
   assert.equal(
     (response.body as { readonly url: string }).url,
     "https://wa.me/584221234567?text=Hola%2C%20soy%20voluntario%20de%20Manos.%20Vi%20tu%20necesidad%20%22Atencion%20medica%22%20en%20Distrito%20Capital%2FCaracas.%20Como%20puedo%20ayudar%3F",
   );
+  assert.equal(necesidad?.estado, EstadoNecesidad.Asignada);
+});
+
+test("CA-2 y CA-3 necesidad asignada sale del default y aparece por filtro sin contacto", async () => {
+  const repo = new InMemoryNecesidadRepository([crearNecesidad({ id: "nec-1" })]);
+
+  await postContacto({ params: { necesidadId: "nec-1" } }, { necesidades: repo });
+
+  const defaultResponse = await getNecesidades(
+    { now: Date.parse("2026-06-25T12:00:00.000Z"), query: {} },
+    { necesidades: repo, voluntarios: new InMemoryVoluntarioRepository() },
+  );
+  const asignadasResponse = await getNecesidades(
+    { now: Date.parse("2026-06-25T12:00:00.000Z"), query: { estado: EstadoNecesidad.Asignada } },
+    { necesidades: repo, voluntarios: new InMemoryVoluntarioRepository() },
+  );
+
+  const asignadasBodyText = JSON.stringify(asignadasResponse.body);
+  assert.deepEqual((defaultResponse.body as ListadoBody).necesidades.map((item) => item.id), []);
+  assert.deepEqual((asignadasResponse.body as ListadoBody).necesidades.map((item) => item.id), ["nec-1"]);
+  assert.equal(asignadasBodyText.includes("+584221234567"), false);
+  assert.equal(asignadasBodyText.includes("contacto"), false);
+});
+
+test("CA-4 contacto duplicado queda bloqueado", async () => {
+  const repo = new InMemoryNecesidadRepository([crearNecesidad({ id: "nec-1" })]);
+
+  await postContacto({ params: { necesidadId: "nec-1" } }, { necesidades: repo });
+  const response = await postContacto({ params: { necesidadId: "nec-1" } }, { necesidades: repo });
+
+  assert.equal(response.status, 409);
+  assert.equal((response.body as { readonly error: string }).error, "Esta necesidad ya esta siendo atendida.");
 });
 
 test("CA-5 necesidad cerrada no genera enlace", async () => {

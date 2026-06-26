@@ -33,7 +33,7 @@ export async function postContacto(
   ).ejecutar(parsed.data.necesidadId);
 
   if (!result.ok) {
-    return { status: 409, body: { error: "Esta necesidad ya no esta activa." } };
+    return { status: 409, body: { error: `${result.error.message}.` } };
   }
 
   return { status: 200, body: { url: result.value.url } };

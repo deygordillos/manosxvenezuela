@@ -16,12 +16,22 @@ export class GenerarContactoWhatsapp {
       return Result.err(new DomainError("NECESIDAD_INVALIDA", "Necesidad no encontrada"));
     }
 
-    if (necesidad.estado !== EstadoNecesidad.Abierta && necesidad.estado !== EstadoNecesidad.Asignada) {
+    if (necesidad.estado === EstadoNecesidad.Asignada) {
+      return Result.err(new DomainError("NECESIDAD_INVALIDA", "Esta necesidad ya esta siendo atendida"));
+    }
+
+    if (necesidad.estado !== EstadoNecesidad.Abierta) {
       return Result.err(new DomainError("NECESIDAD_INVALIDA", "La necesidad ya no esta activa"));
     }
 
-    if (necesidad.caducaEn.getTime() <= Date.now()) {
+    const now = new Date();
+    if (necesidad.caducaEn.getTime() <= now.getTime()) {
       return Result.err(new DomainError("NECESIDAD_INVALIDA", "La necesidad ya no esta activa"));
+    }
+
+    const asignada = await this.necesidades.asignarSiAbierta(necesidad.id, now);
+    if (!asignada) {
+      return Result.err(new DomainError("NECESIDAD_INVALIDA", "Esta necesidad ya esta siendo atendida"));
     }
 
     return Result.ok(this.notificador.generarContacto(necesidad));
