@@ -71,10 +71,15 @@ export class InMemoryNecesidadRepository implements NecesidadRepository {
   }
 
   async listarAbiertasVigentes(now: Date): Promise<Necesidad[]> {
+    return this.listarPorEstado(EstadoNecesidad.Abierta, now);
+  }
+
+  async listarPorEstado(estado: EstadoNecesidad, now: Date): Promise<Necesidad[]> {
     return [...this.necesidades.values()]
       .filter(
         (necesidad) =>
-          necesidad.estado === EstadoNecesidad.Abierta && necesidad.caducaEn.getTime() > now.getTime(),
+          necesidad.estado === estado &&
+          (estado !== EstadoNecesidad.Abierta || necesidad.caducaEn.getTime() > now.getTime()),
       )
       .sort((a, b) => {
         const urgencia = pesoUrgencia(b.urgencia) - pesoUrgencia(a.urgencia);

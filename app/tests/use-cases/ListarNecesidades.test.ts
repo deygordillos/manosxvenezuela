@@ -40,6 +40,54 @@ test("filtra por zona y habilidad", async () => {
   assert.deepEqual(result.necesidades.map((item) => item.id), ["caracas-medico"]);
 });
 
+test("por defecto lista solo ABIERTA", async () => {
+  const now = new Date("2026-06-25T12:00:00.000Z");
+  const repo = new InMemoryNecesidadRepository([
+    crearNecesidad({ id: "abierta" }),
+    crearNecesidad({ id: "asignada", estado: EstadoNecesidad.Asignada }),
+    crearNecesidad({ id: "resuelta", estado: EstadoNecesidad.Resuelta }),
+  ]);
+
+  const result = await new ListarNecesidades(repo).ejecutar(now);
+
+  assert.deepEqual(result.necesidades.map((item) => item.id), ["abierta"]);
+});
+
+test("filtra por estado combinado con zona y habilidad", async () => {
+  const now = new Date("2026-06-25T12:00:00.000Z");
+  const repo = new InMemoryNecesidadRepository([
+    crearNecesidad({ id: "asignada-valencia-transporte", estado: EstadoNecesidad.Asignada, habilidad: Habilidad.Transporte, zona: "Carabobo/Valencia" }),
+    crearNecesidad({ id: "asignada-caracas-transporte", estado: EstadoNecesidad.Asignada, habilidad: Habilidad.Transporte, zona: "Distrito Capital/Caracas" }),
+    crearNecesidad({ id: "abierta-valencia-transporte", habilidad: Habilidad.Transporte, zona: "Carabobo/Valencia" }),
+    crearNecesidad({ id: "asignada-valencia-medico", estado: EstadoNecesidad.Asignada, habilidad: Habilidad.Medico, zona: "Carabobo/Valencia" }),
+  ]);
+
+  const result = await new ListarNecesidades(repo).ejecutar(now, {
+    estado: EstadoNecesidad.Asignada,
+    zona: "Carabobo/Valencia",
+    habilidad: Habilidad.Transporte,
+  });
+
+  assert.deepEqual(result.necesidades.map((item) => item.id), ["asignada-valencia-transporte"]);
+});
+
+test("lista estados cerrados cuando se filtran explicitamente", async () => {
+  const now = new Date("2026-06-25T12:00:00.000Z");
+  const repo = new InMemoryNecesidadRepository([
+    crearNecesidad({ id: "resuelta", estado: EstadoNecesidad.Resuelta }),
+    crearNecesidad({ id: "cancelada", estado: EstadoNecesidad.Cancelada }),
+    crearNecesidad({ id: "expirada", estado: EstadoNecesidad.Expirada }),
+  ]);
+
+  const resueltas = await new ListarNecesidades(repo).ejecutar(now, { estado: EstadoNecesidad.Resuelta });
+  const canceladas = await new ListarNecesidades(repo).ejecutar(now, { estado: EstadoNecesidad.Cancelada });
+  const expiradas = await new ListarNecesidades(repo).ejecutar(now, { estado: EstadoNecesidad.Expirada });
+
+  assert.deepEqual(resueltas.necesidades.map((item) => item.id), ["resuelta"]);
+  assert.deepEqual(canceladas.necesidades.map((item) => item.id), ["cancelada"]);
+  assert.deepEqual(expiradas.necesidades.map((item) => item.id), ["expirada"]);
+});
+
 test("pulso verde sin criticas y rojo si una critica no tiene voluntarios cerca", async () => {
   const now = new Date("2026-06-25T12:00:00.000Z");
   const sinCriticas = await new ListarNecesidades(
@@ -59,6 +107,7 @@ function crearNecesidad(params: {
   readonly urgencia?: Urgencia;
   readonly habilidad?: Habilidad;
   readonly zona?: string;
+  readonly estado?: EstadoNecesidad;
   readonly creadoEn?: Date;
 }): Necesidad {
   const contacto = TelefonoVE.crear("+584221234567");
@@ -72,7 +121,7 @@ function crearNecesidad(params: {
     descripcion: "Se requiere apoyo",
     habilidad: params.habilidad ?? Habilidad.Medico,
     urgencia: params.urgencia ?? Urgencia.Alta,
-    estado: EstadoNecesidad.Abierta,
+    estado: params.estado ?? EstadoNecesidad.Abierta,
     zona,
     contacto: contacto.value,
     tokenGestion: `token-${params.id}`,

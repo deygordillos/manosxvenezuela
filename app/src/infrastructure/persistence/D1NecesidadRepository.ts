@@ -87,9 +87,22 @@ export class D1NecesidadRepository implements NecesidadRepository {
   }
 
   async listarAbiertasVigentes(now: Date): Promise<Necesidad[]> {
+    return this.listarPorEstado(EstadoNecesidad.Abierta, now);
+  }
+
+  async listarPorEstado(estado: EstadoNecesidad, now: Date): Promise<Necesidad[]> {
+    if (estado === EstadoNecesidad.Abierta) {
+      const rows = await this.db
+        .prepare("SELECT * FROM necesidad WHERE estado = ? AND caduca_en > ? ORDER BY urgencia ASC, creado_en DESC")
+        .bind(estado, now.toISOString())
+        .all<NecesidadRow>();
+
+      return rows.results.map((row) => this.hidratar(row));
+    }
+
     const rows = await this.db
-      .prepare("SELECT * FROM necesidad WHERE estado = ? AND caduca_en > ? ORDER BY urgencia ASC, creado_en ASC")
-      .bind(EstadoNecesidad.Abierta, now.toISOString())
+      .prepare("SELECT * FROM necesidad WHERE estado = ? ORDER BY urgencia ASC, creado_en DESC")
+      .bind(estado)
       .all<NecesidadRow>();
 
     return rows.results.map((row) => this.hidratar(row));

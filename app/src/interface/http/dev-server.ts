@@ -35,6 +35,7 @@ async function route(req: IncomingMessage, res: ServerResponse): Promise<void> {
 
   if (req.method === "GET" && url.pathname === "/") {
     const listado = await new ListarNecesidades(necesidades, voluntarios).ejecutar(new Date(), {
+      estado: parseEstadoParam(url.searchParams.get("estado")),
       zona: optionalParam(url.searchParams.get("zona")),
       habilidad: parseHabilidadParam(url.searchParams.get("habilidad")),
     });
@@ -57,6 +58,7 @@ async function route(req: IncomingMessage, res: ServerResponse): Promise<void> {
       {
         now: Date.now(),
         query: {
+          estado: optionalParam(url.searchParams.get("estado")),
           zona: optionalParam(url.searchParams.get("zona")),
           habilidad: optionalParam(url.searchParams.get("habilidad")),
         },
@@ -191,6 +193,10 @@ function parseHabilidadParam(value: string | null): Habilidad | undefined {
   return Object.values(Habilidad).includes(value as Habilidad) ? (value as Habilidad) : undefined;
 }
 
+function parseEstadoParam(value: string | null): EstadoNecesidad | undefined {
+  return Object.values(EstadoNecesidad).includes(value as EstadoNecesidad) ? (value as EstadoNecesidad) : undefined;
+}
+
 function isUrlBody(body: unknown): body is { readonly url: string } {
   return typeof body === "object" && body !== null && "url" in body && typeof body.url === "string";
 }
@@ -298,8 +304,14 @@ class DevNecesidadRepository implements NecesidadRepository {
   }
 
   async listarAbiertasVigentes(now: Date): Promise<Necesidad[]> {
+    return this.listarPorEstado(EstadoNecesidad.Abierta, now);
+  }
+
+  async listarPorEstado(estado: EstadoNecesidad, now: Date): Promise<Necesidad[]> {
     return [...this.necesidades.values()].filter(
-      (necesidad) => necesidad.estado === EstadoNecesidad.Abierta && necesidad.caducaEn > now,
+      (necesidad) =>
+        necesidad.estado === estado &&
+        (estado !== EstadoNecesidad.Abierta || necesidad.caducaEn > now),
     );
   }
 }

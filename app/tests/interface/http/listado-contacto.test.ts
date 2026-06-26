@@ -46,6 +46,25 @@ test("CA-2 filtra por zona y habilidad", async () => {
   assert.deepEqual((response.body as ListadoBody).necesidades.map((item) => item.id), ["valencia-transporte"]);
 });
 
+test("CA-2 filtra por estado y mantiene contacto privado", async () => {
+  const response = await getNecesidades(
+    { now: Date.parse("2026-06-25T12:00:00.000Z"), query: { estado: EstadoNecesidad.Resuelta } },
+    {
+      necesidades: new InMemoryNecesidadRepository([
+        crearNecesidad({ id: "abierta" }),
+        crearNecesidad({ id: "resuelta", estado: EstadoNecesidad.Resuelta }),
+      ]),
+      voluntarios: new InMemoryVoluntarioRepository(),
+    },
+  );
+
+  assert.equal(response.status, 200);
+  const bodyText = JSON.stringify(response.body);
+  assert.equal(bodyText.includes("+584221234567"), false);
+  assert.equal(bodyText.includes("contacto"), false);
+  assert.deepEqual((response.body as ListadoBody).necesidades.map((item) => item.id), ["resuelta"]);
+});
+
 test("CA-3 banda roja cuando critica no tiene voluntarios cerca", async () => {
   const response = await getNecesidades(
     { now: Date.parse("2026-06-25T12:00:00.000Z"), query: {} },
