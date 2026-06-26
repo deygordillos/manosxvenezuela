@@ -2,12 +2,14 @@ import { z } from "zod";
 import { NecesidadRepository } from "../../application/ports/NecesidadRepository";
 import { VoluntarioRepository } from "../../application/ports/VoluntarioRepository";
 import { ListarNecesidades } from "../../application/use-cases/ListarNecesidades";
+import { EstadoNecesidad } from "../../domain/entities/Necesidad";
 import { Habilidad } from "../../domain/value-objects/Habilidad";
 import { type HttpResponse } from "./voluntario";
 
 export type ListadoRequest = {
   readonly now: number;
   readonly query: {
+    readonly estado?: string;
     readonly zona?: string;
     readonly habilidad?: string;
   };
@@ -19,6 +21,7 @@ export type ListadoHttpDeps = {
 };
 
 const listadoSchema = z.object({
+  estado: z.nativeEnum(EstadoNecesidad).optional(),
   zona: z.string().trim().min(1).optional(),
   habilidad: z.nativeEnum(Habilidad).optional(),
 });
@@ -47,6 +50,7 @@ export async function getNecesidades(
         descripcion: necesidad.descripcion,
         habilidad: necesidad.habilidad,
         urgencia: necesidad.urgencia,
+        estado: necesidad.estado,
         zona: necesidad.zona.estadoGeo,
         antiguedadMin: Math.max(0, Math.floor((request.now - necesidad.creadoEn.getTime()) / 60000)),
       })),

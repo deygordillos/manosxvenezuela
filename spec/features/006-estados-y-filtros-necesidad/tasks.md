@@ -1,19 +1,19 @@
 # 006 · Estados y filtros de necesidad — tasks.md
 
 ## Aplicación
-- [ ] Extender `ListarNecesidades` con filtro `estado` y default `ABIERTA`.
-- [ ] Mantener orden `CRITICA` primero dentro del filtro.
+- [x] Extender `ListarNecesidades` con filtro `estado` y default `ABIERTA`.
+- [x] Mantener orden `CRITICA` primero dentro del filtro.
 
 ## Infraestructura
-- [ ] Extender `NecesidadRepository` para listar por estado.
-- [ ] Actualizar `D1NecesidadRepository`.
-- [ ] Actualizar repos en memoria de tests/dev.
+- [x] Extender `NecesidadRepository` para listar por estado.
+- [x] Actualizar `D1NecesidadRepository`.
+- [x] Actualizar repos en memoria de tests/dev.
 
 ## Interfaz
-- [ ] Agregar `estado` a `GET /api/necesidades`.
-- [ ] Agregar select de estado en home.
-- [ ] Mantener contacto fuera de la respuesta.
+- [x] Agregar `estado` a `GET /api/necesidades`.
+- [x] Agregar select de estado en home.
+- [x] Mantener contacto fuera de la respuesta.
 
 ## Definition of Done
-- [ ] CA-1..CA-5 verificados.
-- [ ] Tests verdes.
+- [x] CA-1..CA-5 verificados.
+- [x] Tests verdes.

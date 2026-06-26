@@ -1,4 +1,4 @@
-import { Necesidad } from "../../domain/entities/Necesidad";
+import { EstadoNecesidad, Necesidad } from "../../domain/entities/Necesidad";
 import { VoluntarioRepository } from "../ports/VoluntarioRepository";
 import { Habilidad } from "../../domain/value-objects/Habilidad";
 import { Urgencia, pesoUrgencia } from "../../domain/value-objects/Urgencia";
@@ -6,6 +6,7 @@ import { NecesidadRepository } from "../ports/NecesidadRepository";
 import { EmparejarVoluntarios } from "./EmparejarVoluntarios";
 
 export type FiltrosListadoNecesidades = {
+  readonly estado?: EstadoNecesidad;
   readonly zona?: string;
   readonly habilidad?: Habilidad;
 };
@@ -24,7 +25,8 @@ export class ListarNecesidades {
   ) {}
 
   async ejecutar(now: Date, filtros: FiltrosListadoNecesidades = {}): Promise<ListadoNecesidades> {
-    const necesidades = (await this.repo.listarAbiertasVigentes(now))
+    const estado = filtros.estado ?? EstadoNecesidad.Abierta;
+    const necesidades = (await this.repo.listarPorEstado(estado, now))
       .filter((necesidad) => filtros.zona === undefined || necesidad.zona.estadoGeo === filtros.zona)
       .filter((necesidad) => filtros.habilidad === undefined || necesidad.habilidad === filtros.habilidad)
       .sort((a, b) => {

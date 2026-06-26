@@ -9,4 +9,5 @@ export interface NecesidadRepository {
   cambiarEstado(id: string, estado: EstadoNecesidad): Promise<void>;
   expirarVencidas(now: Date): Promise<number>;
   listarAbiertasVigentes(now: Date): Promise<Necesidad[]>;
+  listarPorEstado(estado: EstadoNecesidad, now: Date): Promise<Necesidad[]>;
 }

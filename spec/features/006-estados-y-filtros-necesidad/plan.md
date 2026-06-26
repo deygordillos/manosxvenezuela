@@ -2,6 +2,8 @@
 
 > Extender listado existente con filtro por estado.
 
+Estado: implementada en `feat/estados-filtros-necesidad`.
+
 ## Archivos
 ```
 src/application/use-cases/ListarNecesidades.ts
