@@ -1,15 +1,15 @@
 # 008 · Gestión de necesidad por token — tasks.md
 
 ## Interfaz
-- [ ] Crear handler GET de gestión por token.
-- [ ] Crear pantalla `GestionNecesidad.tsx`.
-- [ ] Acciones `RESUELTA` y `CANCELADA`.
-- [ ] Aviso para token inválido.
+- [x] Crear handler GET de gestión por token.
+- [x] Crear pantalla `GestionNecesidad.tsx`.
+- [x] Acciones `RESUELTA` y `CANCELADA`.
+- [x] Aviso para token inválido.
 
 ## Seguridad
-- [ ] No exponer IDs internos para mutación.
-- [ ] Validar token en servidor.
+- [x] No exponer IDs internos para mutación.
+- [x] Validar token en servidor.
 
 ## Definition of Done
-- [ ] CA-1..CA-5 verificados.
-- [ ] Tests verdes.
+- [x] CA-1..CA-5 verificados.
+- [x] Tests verdes.
