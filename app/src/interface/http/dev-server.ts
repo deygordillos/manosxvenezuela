@@ -19,6 +19,7 @@ import { postVoluntario } from "./voluntario";
 import { renderListadoNecesidadesPage } from "../web/ListadoNecesidades";
 import { renderPublicarNecesidadPage } from "../web/PublicarNecesidad";
 import { renderRegistroVoluntarioPage } from "../web/RegistroVoluntario";
+import { renderPageShell } from "../web/layout/PageShell";
 
 const PORT = Number(process.env.PORT ?? 4321);
 const BASE_URL = `http://localhost:${PORT}`;
@@ -145,7 +146,13 @@ function necesidadBody(form: URLSearchParams): Record<string, unknown> {
 }
 
 function renderDevResult(title: string, status: number, body: unknown): string {
-  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title}</title><style>body{margin:0;background:#0E1116;color:#F4F6F8;font-family:-apple-system,"Segoe UI",sans-serif;padding:24px}main{max-width:760px;margin:auto;background:#181C23;border:1px solid #2C333D;border-radius:16px;padding:20px}a{color:#FF6A2B}pre{white-space:pre-wrap;background:#222831;border-radius:12px;padding:14px}</style></head><body><main><h1>${title}</h1><p>Estado HTTP: ${status}</p><pre>${escapeHtml(JSON.stringify(body, null, 2))}</pre><p><a href="/">Volver al listado</a></p></main></body></html>`;
+  return renderPageShell({
+    title,
+    activePath: "/",
+    styles:
+      "body{margin:0;background:#0E1116;color:#F4F6F8;font-family:-apple-system,\"Segoe UI\",sans-serif}.dev-result{max-width:760px;margin:auto;background:#181C23;border:1px solid #2C333D;border-radius:16px;padding:20px}.dev-result a{color:#FF6A2B}.dev-result pre{white-space:pre-wrap;background:#222831;border-radius:12px;padding:14px}",
+    body: `<main class="dev-result"><h1>${escapeHtml(title)}</h1><p>Estado HTTP: ${status}</p><pre>${escapeHtml(JSON.stringify(body, null, 2))}</pre><p><a href="/">Volver al listado</a></p></main>`,
+  });
 }
 
 async function readForm(req: IncomingMessage): Promise<URLSearchParams> {

@@ -1,5 +1,6 @@
 import { Habilidad } from "../../domain/value-objects/Habilidad";
 import { MUNICIPIOS } from "../../shared/municipios";
+import { renderPageShell } from "./layout/PageShell";
 
 const HABILIDADES_LABEL: Record<Habilidad, string> = {
   [Habilidad.RescateUrbano]: "Rescate urbano",
@@ -15,19 +16,13 @@ const HABILIDADES_LABEL: Record<Habilidad, string> = {
 };
 
 export function renderRegistroVoluntarioPage(turnstileSiteKey: string, timestamp = Date.now()): string {
-  return `<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Registro de voluntario | Manos</title>
-  <style>${REGISTRO_VOLUNTARIO_CSS}</style>
-</head>
-<body>
-  <main class="registro-shell">
+  return renderPageShell({
+    title: "Registro de voluntario | Manos",
+    activePath: "/voluntario/registro",
+    styles: REGISTRO_VOLUNTARIO_CSS,
+    body: `<main class="registro-shell">
     <section class="registro-card" aria-labelledby="registro-title">
       <div class="pulse-strip" aria-hidden="true"></div>
-      <a class="home-link" href="/">← Volver al inicio</a>
       <p class="eyebrow">Canal de apoyo verificado</p>
       <h1 id="registro-title">Di que puedes hacer y donde estas.</h1>
       <p class="lead">Usaremos tus habilidades y tu radio de movimiento para avisarte solo cuando haya una necesidad compatible cerca.</p>
@@ -46,9 +41,8 @@ export function renderRegistroVoluntarioPage(turnstileSiteKey: string, timestamp
         <button type="submit">Registrarme como disponible</button>
       </form>
     </section>
-  </main>
-</body>
-</html>`;
+  </main>`,
+  });
 }
 
 function renderHabilidades(): string {

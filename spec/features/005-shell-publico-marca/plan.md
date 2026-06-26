@@ -2,6 +2,9 @@
 
 > Extraer layout compartido para páginas HTML sin framework.
 
+## Estado
+Implementada en `app/` y verificada con `npm test`.
+
 ## Archivos
 ```
 src/interface/web/layout/PageShell.ts
