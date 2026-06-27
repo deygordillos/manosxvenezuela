@@ -88,11 +88,12 @@ export class D1NecesidadRepository implements NecesidadRepository {
   }
 
   async expirarVencidas(now: Date): Promise<number> {
-    await this.db
+    const result = await this.db
       .prepare("UPDATE necesidad SET estado = ? WHERE estado = ? AND caduca_en <= ?")
       .bind(EstadoNecesidad.Expirada, EstadoNecesidad.Abierta, now.toISOString())
       .run();
-    return 0;
+
+    return ((result as { readonly meta?: { readonly changes?: number } }).meta?.changes ?? 0);
   }
 
   async listarAbiertasVigentes(now: Date): Promise<Necesidad[]> {
@@ -100,9 +101,11 @@ export class D1NecesidadRepository implements NecesidadRepository {
   }
 
   async listarPorEstado(estado: EstadoNecesidad, now: Date): Promise<Necesidad[]> {
+    const orderExpr = "CASE urgencia WHEN 'CRITICA' THEN 0 WHEN 'ALTA' THEN 1 WHEN 'MEDIA' THEN 2 ELSE 3 END";
+
     if (estado === EstadoNecesidad.Abierta) {
       const rows = await this.db
-        .prepare("SELECT * FROM necesidad WHERE estado = ? AND caduca_en > ? ORDER BY urgencia ASC, creado_en DESC")
+        .prepare(`SELECT * FROM necesidad WHERE estado = ? AND caduca_en > ? ORDER BY ${orderExpr}, creado_en DESC`)
         .bind(estado, now.toISOString())
         .all<NecesidadRow>();
 
@@ -110,7 +113,7 @@ export class D1NecesidadRepository implements NecesidadRepository {
     }
 
     const rows = await this.db
-      .prepare("SELECT * FROM necesidad WHERE estado = ? ORDER BY urgencia ASC, creado_en DESC")
+      .prepare(`SELECT * FROM necesidad WHERE estado = ? ORDER BY ${orderExpr}, creado_en DESC`)
       .bind(estado)
       .all<NecesidadRow>();
 
